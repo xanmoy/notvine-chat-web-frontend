@@ -8,6 +8,8 @@ import LogoutIcon from "../assets/logout.png";
 import { MessagesSquare } from "lucide-react";
 import { LogOut } from 'lucide-react';
 
+const cookies = new Cookies();
+
 const SideBar = ({ logout }) => (
   <div className="channel-list__sidebar">
     <div className="channel-list__sidebar__icon1">
@@ -32,46 +34,59 @@ const CompanyHeader = () => (
 );
 
 const ChannelListContainer = () => {
+  const logout = () => {
+    const cookies = new Cookies();
+
+    cookies.remove("token");
+    cookies.remove("userId");
+    cookies.remove("username");
+    cookies.remove("fullName");
+    cookies.remove("avatarURL");
+    cookies.remove("hashedPassword");
+    cookies.remove("phoneNumber");
+
+    window.location.reload();
+  };
   return (
     <>
-      <SideBar />
+      <SideBar logout={logout} />
       <div className="channel-list__list__wrapper">
         <CompanyHeader />
         <ChannelSearch />
         <ChannelList
           filters={{}}
-          channelRenderFilterFn={() => {}}
+          channelRenderFilterFn={() => { }}
           List={(listProps) => (
             <TeamChannelList
               {...listProps}
               type="team"
-             
-                />
+
+            />
           )}
           Preview={(previewProps) => (
             <TeamChannelPreview
               {...previewProps}
               type="team"
-              
+
             />
           )}
         />
 
         <ChannelList
           filters={{}}
-          channelRenderFilterFn={() => {}}
+          channelRenderFilterFn={() => { }}
           List={(listProps) => (
             <TeamChannelList
               {...listProps}
               type="messaging"
-             
-                />
+
+            />
           )}
           Preview={(previewProps) => (
             <TeamChannelPreview
               {...previewProps}
               type="messaging"
-              
+
             />
           )}
         />
